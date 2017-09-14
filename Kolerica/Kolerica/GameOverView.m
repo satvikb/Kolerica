@@ -8,11 +8,12 @@
 
 #import "GameOverView.h"
 #import "Storage.h"
+#import "Label.h"
 
 @implementation GameOverView {
-    UILabel* mainLabel;
-    UILabel* scoreLabel;
-    UILabel* newHighScoreLabel;
+    Label* mainLabel;
+    Label* scoreLabel;
+    Label* newHighScoreLabel;
     
     Button* replayButton;
     Button* shareButton;
@@ -24,9 +25,12 @@
 -(instancetype)initWithFrame:(CGRect)frame score:(int)_score newHighScore:(bool)newHighScore{
     self = [super initWithFrame:frame];
     
+    self.tag = 2;
+    self.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
     score = _score;
     
-    mainLabel = [[UILabel alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.1, 0.9, 0.15)]];
+    mainLabel = [[Label alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.1, 0.9, 0.15)]];
     mainLabel.textAlignment = NSTextAlignmentCenter;
     mainLabel.text = @"game over";
 //    mainLabel.layer.borderWidth = [Storage getCurrentBorderWidth];
@@ -34,14 +38,14 @@
     mainLabel.tag = 1;
     [self addSubview:mainLabel];
     
-    scoreLabel = [[UILabel alloc] initWithFrame:[self propToRect:CGRectMake(0.1, 0.3, 0.8, 0.1)]];
+    scoreLabel = [[Label alloc] initWithFrame:[self propToRect:CGRectMake(0.1, 0.3, 0.8, 0.1)]];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
     scoreLabel.text = [NSString stringWithFormat:@"score: %i", score];
     scoreLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:40]];
     scoreLabel.tag = 1;
     [self addSubview:scoreLabel];
     
-    newHighScoreLabel = [[UILabel alloc] initWithFrame:[self propToRect:CGRectMake(0.1, 0.4, 0.8, 0.075)]];
+    newHighScoreLabel = [[Label alloc] initWithFrame:[self propToRect:CGRectMake(0.1, 0.4, 0.8, 0.075)]];
     newHighScoreLabel.textAlignment = NSTextAlignmentCenter;
     newHighScoreLabel.text = newHighScore == true ? @"new high score!" : @"";
     newHighScoreLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];

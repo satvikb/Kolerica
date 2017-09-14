@@ -8,11 +8,13 @@
 
 #import "ViewController.h"
 #import "Flurry.h"
+#import "Label.h"
+
 @import GoogleMobileAds;
 
 @interface ViewController () <GADBannerViewDelegate, GADInterstitialDelegate> {
     NSMutableArray *words;
-    UILabel* mainWordLabel;
+    Label* mainWordLabel;
     NSString* currentWord;
     
     MenuView* menuView;
@@ -181,8 +183,8 @@
 
 -(void)changeViewLabels:(UIView*)mainView fontTo:(NSString*)font{
     for(UIView* subview in mainView.subviews){
-        if([subview isKindOfClass:[UILabel class]]){
-            UILabel* label = (UILabel*)subview;
+        if([subview isKindOfClass:[Label class]]){
+            Label* label = (Label*)subview;
             
             label.font = [UIFont fontWithName:font size: label.font.pointSize ];
         }else{
@@ -197,13 +199,42 @@
 
 -(void)changeViews:(UIView*)mainView borderTo:(int)border{
     for(UIView* subview in mainView.subviews){
-        if(subview.tag == 1 || [subview isKindOfClass:[GADBannerView class]]){
+        if(subview.tag == 1 || subview.tag == 2 || [subview isKindOfClass:[GADBannerView class]]){
             subview.layer.borderWidth = 0;
         }else{
             subview.layer.borderWidth = border;
         }
         
         [self changeViews:subview borderTo:border];
+    }
+}
+
+
+-(void)switchAllBorderColorTo:(UIColor*)borderColor{
+    [self changeViews:self.view borderColorTo:borderColor];
+}
+
+-(void)changeViews:(UIView*)mainView borderColorTo:(UIColor*)borderColor{
+    for(UIView* subview in mainView.subviews){
+        if(subview.tag == 1 || [subview isKindOfClass:[GADBannerView class]]){
+//            subview.layer.borderWidth = 0;
+        }else{
+            subview.layer.borderColor = borderColor.CGColor;
+        }
+        
+        if([subview isKindOfClass:[Button class]]){
+            [(Button*)subview updateDarkMode];
+        }
+        
+        if([subview isKindOfClass:[Label class]]){
+            [(Label*)subview updateDarkMode];
+        }
+        
+        if(subview.tag == 2){
+            subview.layer.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor.CGColor : UIColor.whiteColor.CGColor;
+        }
+        
+        [self changeViews:subview borderColorTo:borderColor];
     }
 }
 

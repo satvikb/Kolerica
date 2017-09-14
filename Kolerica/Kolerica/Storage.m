@@ -17,6 +17,7 @@ static NSString* const tutorialId = @"tutorial";
 static NSString* const adsId = @"ads";
 static NSString* const currentGames = @"currentGames";
 static NSString* const showScoreInMainCircle = @"scoreInMainCircle";
+static NSString* const darkMode = @"darkMode";
 
 +(bool)saveHighScore:(int)score{
     int currentHighScore = [self getSavedHighScore];
@@ -83,6 +84,17 @@ static NSString* const showScoreInMainCircle = @"scoreInMainCircle";
 +(void)setShouldShowScoreInMainCircle:(bool)shouldShow{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:shouldShow forKey:showScoreInMainCircle];
+}
+
++(bool)getDarkModeEnabled {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    
+    return [defaults boolForKey:darkMode];
+}
+
++(void)setDarkModeEnabled:(bool)darkModeEnabled{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:darkModeEnabled forKey:darkMode];
 }
 
 +(bool)setAdsState:(int)state{

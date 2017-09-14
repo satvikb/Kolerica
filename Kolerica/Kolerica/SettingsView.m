@@ -7,15 +7,16 @@
 //
 
 #import "SettingsView.h"
-
+#import "Label.h"
 
 @implementation SettingsView {
-    UILabel* mainLabel;
-    UILabel* scoreLabel;
+    Label* mainLabel;
+    Label* scoreLabel;
     
     Button* backButton;
     Button* fontButton;
     Button* borderButton;
+    Button* darkModeButton;
     Button* scoreOnCircleButton;
 
     Button* aboutButton;
@@ -27,6 +28,9 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     
+    self.tag = 2;
+    self.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
     currentFont = [Storage getCurrentFont];
     currentBorder = [Storage getCurrentBorderWidth];
     
@@ -36,7 +40,7 @@
     backButton.layer.borderWidth = [Storage getCurrentBorderWidth];
     [self addSubview:backButton];
     
-    mainLabel = [[UILabel alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.15, 0.9, 0.15)]];
+    mainLabel = [[Label alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.15, 0.9, 0.15)]];
     mainLabel.textAlignment = NSTextAlignmentCenter;
     mainLabel.text = @"settings";
     mainLabel.layer.borderWidth = 0;// [Storage getCurrentBorderWidth];
@@ -67,8 +71,14 @@
     scoreOnCircleButton.layer.borderWidth = [Storage getCurrentBorderWidth];
     [self addSubview:scoreOnCircleButton];
     
-    self.tag = 1;
     
+    darkModeButton = [[Button alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.7, 0.9, 0.075)] withBlock:^{
+        [self changeDarkMode];
+    } text:@""];
+    darkModeButton.textLabel.text = [NSString stringWithFormat:@"dark mode %@", [Storage getDarkModeEnabled] == true ? @"yes" : @"no"];
+    darkModeButton.layer.borderWidth = [Storage getCurrentBorderWidth];
+    [self addSubview:darkModeButton];
+        
     aboutButton = [[Button alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.8, 0.9, 0.1)] withBlock:^{
         [self showAboutScreen];
     } text:@"about"];
@@ -80,16 +90,17 @@
 
 -(void)showAboutScreen{
     UIView* aboutView = [[UIView alloc] initWithFrame:[self propToRect:CGRectMake(0, 0, 1, 1)]];
-    aboutView.backgroundColor = UIColor.whiteColor;
-    
-    UILabel* mainAboutLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.075, 0.9, 0.1)])];
+    aboutView.tag = 2;
+    aboutView.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
+    Label* mainAboutLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.075, 0.9, 0.1)])];
     mainAboutLabel.text = @"about";
     mainAboutLabel.textAlignment = NSTextAlignmentCenter;
     mainAboutLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:70]];
     mainAboutLabel.adjustsFontSizeToFitWidth = true;
     [aboutView addSubview:mainAboutLabel];
     
-    UILabel* gamesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.2, 0.9, 0.1)])];
+    Label* gamesPlayedLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.2, 0.9, 0.1)])];
     gamesPlayedLabel.text = [NSString stringWithFormat:@"games played: %i", [Storage getCurrentGamesPlayed]];
     gamesPlayedLabel.textAlignment = NSTextAlignmentCenter;
     gamesPlayedLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
@@ -97,7 +108,7 @@
     gamesPlayedLabel.tag = 1;
     [aboutView addSubview:gamesPlayedLabel];
     
-    UILabel* highScoreLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.3, 0.9, 0.1)])];
+    Label* highScoreLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.3, 0.9, 0.1)])];
     highScoreLabel.text = [NSString stringWithFormat:@"high score: %i", [Storage getSavedHighScore]];
     highScoreLabel.textAlignment = NSTextAlignmentCenter;
     highScoreLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
@@ -129,24 +140,24 @@
 
 -(void)showDevStatsScreen{
     UIView* devStatsView = [[UIView alloc] initWithFrame:[self propToRect:CGRectMake(0, 0, 1, 1)]];
-    devStatsView.backgroundColor = UIColor.whiteColor;
-    
-    UILabel* mainCreditsLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.075, 0.9, 0.1)])];
+    devStatsView.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
+    Label* mainCreditsLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.075, 0.9, 0.1)])];
     mainCreditsLabel.text = @"dev stats";
     mainCreditsLabel.textAlignment = NSTextAlignmentCenter;
     mainCreditsLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:70]];
     mainCreditsLabel.adjustsFontSizeToFitWidth = true;
     [devStatsView addSubview:mainCreditsLabel];
     
-    UILabel* hoursSpentLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.2, 0.9, 0.1)])];
-    hoursSpentLabel.text = [NSString stringWithFormat:@"hours spent developing: 3"];
+    Label* hoursSpentLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.2, 0.9, 0.1)])];
+    hoursSpentLabel.text = [NSString stringWithFormat:@"hours spent developing: 6"];
     hoursSpentLabel.textAlignment = NSTextAlignmentCenter;
     hoursSpentLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
     hoursSpentLabel.adjustsFontSizeToFitWidth = true;
     hoursSpentLabel.tag = 1;
     [devStatsView addSubview:hoursSpentLabel];
     
-    UILabel* peopleInvolvedLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.3, 0.9, 0.1)])];
+    Label* peopleInvolvedLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.3, 0.9, 0.1)])];
     peopleInvolvedLabel.text = [NSString stringWithFormat:@"people involved: 2"];
     peopleInvolvedLabel.textAlignment = NSTextAlignmentCenter;
     peopleInvolvedLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
@@ -155,8 +166,8 @@
     peopleInvolvedLabel.tag = 1;
     [devStatsView addSubview:peopleInvolvedLabel];
     
-    UILabel* linesOfCodeLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.4, 0.9, 0.1)])];
-    linesOfCodeLabel.text = [NSString stringWithFormat:@"lines of code: 1324"];
+    Label* linesOfCodeLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.4, 0.9, 0.1)])];
+    linesOfCodeLabel.text = [NSString stringWithFormat:@"lines of code: 1436"];
     linesOfCodeLabel.textAlignment = NSTextAlignmentCenter;
     linesOfCodeLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
     linesOfCodeLabel.adjustsFontSizeToFitWidth = true;
@@ -164,8 +175,8 @@
     linesOfCodeLabel.tag = 1;
     [devStatsView addSubview:linesOfCodeLabel];
     
-    UILabel* linesOfCodeReusedLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.5, 0.9, 0.1)])];
-    linesOfCodeReusedLabel.text = [NSString stringWithFormat:@"lines of code reused: 1150"];
+    Label* linesOfCodeReusedLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.5, 0.9, 0.1)])];
+    linesOfCodeReusedLabel.text = [NSString stringWithFormat:@"lines of code reused: 1029"];
     linesOfCodeReusedLabel.textAlignment = NSTextAlignmentCenter;
     linesOfCodeReusedLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
     linesOfCodeReusedLabel.adjustsFontSizeToFitWidth = true;
@@ -184,16 +195,16 @@
 
 -(void)showCreditsScreen{
     UIView* creditsView = [[UIView alloc] initWithFrame:[self propToRect:CGRectMake(0, 0, 1, 1)]];
-    creditsView.backgroundColor = UIColor.whiteColor;
-    
-    UILabel* mainCreditsLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.075, 0.9, 0.1)])];
+    creditsView.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
+    Label* mainCreditsLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.075, 0.9, 0.1)])];
     mainCreditsLabel.text = @"credits";
     mainCreditsLabel.textAlignment = NSTextAlignmentCenter;
     mainCreditsLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:70]];
     mainCreditsLabel.adjustsFontSizeToFitWidth = true;
     [creditsView addSubview:mainCreditsLabel];
     
-    UILabel* creditsLabel =  [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.025, 0.2, 0.95, 0.25)])];
+    Label* creditsLabel =  [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.025, 0.2, 0.95, 0.25)])];
     creditsLabel.text = @"idea by satvik borra\n'font 2' by satvik borra\ncoding by satvik borra";
     creditsLabel.textAlignment = NSTextAlignmentCenter;
     creditsLabel.numberOfLines = 3;
@@ -254,6 +265,13 @@
     [Storage setBorderWidth:currentBorder];
     
     [self.delegate switchAllBorderWidthTo:currentBorder];
+}
+
+-(void)changeDarkMode {
+    [Storage setDarkModeEnabled:![Storage getDarkModeEnabled]];
+    darkModeButton.textLabel.text = [NSString stringWithFormat:@"dark mode %@", [Storage getDarkModeEnabled] == true ? @"yes" : @"no"];
+
+    [self.delegate switchAllBorderColorTo:[Storage getDarkModeEnabled] == true ? UIColor.whiteColor : UIColor.blackColor];
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{

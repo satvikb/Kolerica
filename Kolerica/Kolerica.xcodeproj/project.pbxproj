@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400F3E201F6A12F100E996C6 /* Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 400F3E1F1F6A12F100E996C6 /* Label.m */; };
 		40588EC71F6969CF000F42F3 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40588EC61F6969CF000F42F3 /* GameKit.framework */; };
 		405AE1291F69DB4E000B169B /* ColorCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 405AE1281F69DB4E000B169B /* ColorCircle.m */; };
 		406F072F1F67453C00048F86 /* libFlurry_8.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 406F072E1F67453100048F86 /* libFlurry_8.1.0.a */; };
@@ -32,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		400F3E1E1F6A12F100E996C6 /* Label.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
+		400F3E1F1F6A12F100E996C6 /* Label.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Label.m; sourceTree = "<group>"; };
 		40588EC61F6969CF000F42F3 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		405AE1271F69DB4E000B169B /* ColorCircle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorCircle.h; sourceTree = "<group>"; };
 		405AE1281F69DB4E000B169B /* ColorCircle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorCircle.m; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				406F072B1F67453100048F86 /* Flurry */,
 				405AE1271F69DB4E000B169B /* ColorCircle.h */,
 				405AE1281F69DB4E000B169B /* ColorCircle.m */,
+				400F3E1E1F6A12F100E996C6 /* Label.h */,
+				400F3E1F1F6A12F100E996C6 /* Label.m */,
 			);
 			path = Kolerica;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				409A2D501F66F7DC00558127 /* GameOverView.m in Sources */,
 				40FE74A51F664CDB00D1D9DA /* AppDelegate.m in Sources */,
 				409A2D4A1F66EF5D00558127 /* MenuView.m in Sources */,
+				400F3E201F6A12F100E996C6 /* Label.m in Sources */,
 				409A2D5F1F671F0400558127 /* GameCenterLeaderboardView.m in Sources */,
 				409A2D4D1F66EFF400558127 /* Button.m in Sources */,
 				409A2D531F66FB2400558127 /* SettingsView.m in Sources */,

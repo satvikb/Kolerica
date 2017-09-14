@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Button.h"
 #import "Functions.h"
+#import "Label.h"
 
 @protocol MenuViewDelegate;
 
 @interface MenuView : UIView
 
 @property (nonatomic, strong) id<MenuViewDelegate> delegate;
-@property (nonatomic, strong) UILabel* labelUnderScores;
+@property (nonatomic, strong) Label* labelUnderScores;
 
 @end
 

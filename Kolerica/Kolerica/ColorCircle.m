@@ -26,7 +26,7 @@
     
     self.layer.cornerRadius = self.frame.size.width/2;
     
-    self.textLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(0, 0, nF.size.width, nF.size.height))];
+    self.textLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(0, 0, nF.size.width, nF.size.height))];
     self.textLabel.text = text;
     self.textLabel.textAlignment = NSTextAlignmentCenter;
     self.textLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:30]];
@@ -34,6 +34,9 @@
     self.layer.zPosition = 100;
     [self addSubview:self.textLabel];
     
+    self.textLabel.layer.backgroundColor = UIColor.clearColor.CGColor;
+    self.layer.borderColor = [Storage getDarkModeEnabled] == true ? UIColor.whiteColor.CGColor : UIColor.blackColor.CGColor;
+
     return self;
 }
 

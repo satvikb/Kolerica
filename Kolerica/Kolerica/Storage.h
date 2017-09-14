@@ -32,6 +32,9 @@
 +(bool)getShowScoreInMainCircle;
 +(void)setShouldShowScoreInMainCircle:(bool)shouldShow;
 
++(bool)getDarkModeEnabled;
++(void)setDarkModeEnabled:(bool)darkModeEnabled;
+    
 +(NSString*)getFontNameFromNumber:(int)number;
 
 @end

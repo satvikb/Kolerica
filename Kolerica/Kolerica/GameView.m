@@ -9,9 +9,10 @@
 #import "GameView.h"
 #import "Storage.h"
 #import "ColorCircle.h"
+#import "Label.h"
 
 @implementation GameView {
-    UILabel* scoreLabel;
+    Label* scoreLabel;
     ColorCircle* mainCircle;
     NSMutableArray<ColorCircle*>* colorCircles;
     
@@ -32,6 +33,9 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     
+    self.tag = 2;
+    self.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
     score = 0;
     newHighScore = false;
     colorCircles = [[NSMutableArray alloc] init];
@@ -42,10 +46,11 @@
         [self startGame];
     }else{
         UIView* tutorialView = [[UIView alloc] initWithFrame:[self propToRect:CGRectMake(0.1, 0.2, 0.8, 0.6)]];
-        tutorialView.backgroundColor = UIColor.whiteColor;
+        tutorialView.layer.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor.CGColor : UIColor.whiteColor.CGColor;
         tutorialView.layer.borderWidth = 5;
-        
-        UILabel* mainLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(tutorialView.frame.size.width*0.05, tutorialView.frame.size.height*0.05, tutorialView.frame.size.width*0.9, tutorialView.frame.size.height*0.7))];
+        tutorialView.layer.borderColor = [Storage getDarkModeEnabled] == true ? UIColor.whiteColor.CGColor : UIColor.blackColor.CGColor;
+
+        Label* mainLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(tutorialView.frame.size.width*0.05, tutorialView.frame.size.height*0.05, tutorialView.frame.size.width*0.9, tutorialView.frame.size.height*0.7))];
         mainLabel.text = @"select the cirlce that is the same color as the circle above";
         mainLabel.numberOfLines = 5;
         mainLabel.textAlignment = NSTextAlignmentCenter;
@@ -76,7 +81,7 @@
 }
 
 -(void)createScoreLabel{
-    scoreLabel = [[UILabel alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.05, 0.9, 0.1)]];
+    scoreLabel = [[Label alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.05, 0.9, 0.1)]];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
     scoreLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:50]];
     scoreLabel.adjustsFontSizeToFitWidth = true;
@@ -192,7 +197,10 @@
         if(gameOverHappening == false){
             if([Storage getDidCompleteTutorial] == true){
                 score += 1;
-                timePerColor -= 0.01;
+                
+                if(timePerColor > 0.5){
+                    timePerColor -= 0.01;
+                }
                 
                 scoreLabel.text = [NSString stringWithFormat:@"%i", score];
                 
@@ -225,11 +233,11 @@
 }
 
 -(void)resetBorder:(ColorCircle*)btn{
-    btn.layer.borderColor = UIColor.blackColor.CGColor;
+    btn.layer.borderColor = [Storage getDarkModeEnabled] == true ? UIColor.whiteColor.CGColor : UIColor.blackColor.CGColor;
 }
 
 -(void)gameOverAndResetBorder:(ColorCircle*)btn{
-    btn.layer.borderColor = UIColor.blackColor.CGColor;
+    btn.layer.borderColor = [Storage getDarkModeEnabled] == true ? UIColor.whiteColor.CGColor : UIColor.blackColor.CGColor;
     [self gameOver];
 }
 

@@ -9,6 +9,7 @@
 #import "GameCenterLeaderboardView.h"
 #import "Storage.h"
 #import "Button.h"
+#import "Label.h"
 
 @implementation GameCenterLeaderboardView {
     UIScrollView* scroll;
@@ -22,7 +23,8 @@
 
 -(instancetype)initWithFrame:(CGRect)frame scores:(NSArray*)scores localPlayerScore:(GKScore*)localPlayerScore{
     self = [super initWithFrame:frame];
-    self.backgroundColor = UIColor.whiteColor;
+    self.backgroundColor = [Storage getDarkModeEnabled] == true ? UIColor.blackColor : UIColor.whiteColor;
+
     localScore = localPlayerScore;
     
     cellSize = [self propToRect:CGRectMake(0, 0, 1, 0.1)].size;
@@ -41,10 +43,9 @@
     backButton = [[Button alloc] initWithFrame:[self propToRect:CGRectMake(0.7, 0.05, 0.25, 0.075)] withBlock:^void{
         [self.delegate switchFrom:GamecenterLeaderboard to:Menu];
     } text:@"back"];
-    backButton.layer.borderWidth = [Storage getCurrentBorderWidth];
     [self addSubview:backButton];
     
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.05, 0.6, 0.075)])];
+    Label* titleLabel = [[Label alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.05, 0.05, 0.6, 0.075)])];
     titleLabel.text = @"leaderboard";
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:40]];
@@ -68,20 +69,22 @@
     
     localScoreView = [[UIView alloc] initWithFrame:CGRectIntegral(CGRectMake(0, self.frame.size.height-cellSize.height+yOffset, cellSize.width, cellSize.height))];
     localScoreView.layer.borderWidth = 2;
-    UILabel* rankLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0, cellSize.height*0, cellSize.width*0.2, cellSize.height))];
+    localScoreView.layer.borderColor = [Storage getDarkModeEnabled] == true ? UIColor.whiteColor.CGColor : UIColor.blackColor.CGColor;
+    
+    Label* rankLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0, cellSize.height*0, cellSize.width*0.2, cellSize.height))];
     rankLabel.text = [NSString stringWithFormat:@"%li.", (long)localScore.rank];
     rankLabel.textAlignment = NSTextAlignmentCenter;
     rankLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:20]];
     [localScoreView addSubview:rankLabel];
     
-    UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.2, cellSize.height*0, cellSize.width*0.5, cellSize.height))];
+    Label* nameLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.2, cellSize.height*0, cellSize.width*0.5, cellSize.height))];
     nameLabel.text = [NSString stringWithFormat:@"%@", [GKLocalPlayer localPlayer].alias];
     nameLabel.textAlignment = NSTextAlignmentLeft;
     nameLabel.adjustsFontSizeToFitWidth = true;
     nameLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:20]];
     [localScoreView addSubview:nameLabel];
     
-    UILabel* scoreLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.7, cellSize.height*0, cellSize.width*0.3, cellSize.height))];
+    Label* scoreLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.7, cellSize.height*0, cellSize.width*0.3, cellSize.height))];
     scoreLabel.text = [NSString stringWithFormat:@"%lli", localScore.value];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
     scoreLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:40]];
@@ -95,20 +98,20 @@
 -(void)addScoreUnitScore:(GKScore*)score withPlayer:(GKPlayer*)player i:(int)i{
     
     UIView* playerScoreUnit = [[UIView alloc] initWithFrame:CGRectIntegral(CGRectMake(0, cellSize.height*i, cellSize.width, cellSize.height))];
-    UILabel* rankLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0, cellSize.height*0, cellSize.width*0.2, cellSize.height))];
+    Label* rankLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0, cellSize.height*0, cellSize.width*0.2, cellSize.height))];
     rankLabel.text = [NSString stringWithFormat:@"%li.", (long)score.rank];
     rankLabel.textAlignment = NSTextAlignmentCenter;
     rankLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:20]];
     [playerScoreUnit addSubview:rankLabel];
     
-    UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.2, cellSize.height*0, cellSize.width*0.5, cellSize.height))];
+    Label* nameLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.2, cellSize.height*0, cellSize.width*0.5, cellSize.height))];
     nameLabel.text = [NSString stringWithFormat:@"%@", player.alias];
     nameLabel.textAlignment = NSTextAlignmentLeft;
     nameLabel.adjustsFontSizeToFitWidth = true;
     nameLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:20]];
     [playerScoreUnit addSubview:nameLabel];
     
-    UILabel* scoreLabel = [[UILabel alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.7, cellSize.height*0, cellSize.width*0.3, cellSize.height))];
+    Label* scoreLabel = [[Label alloc] initWithFrame:CGRectIntegral(CGRectMake(cellSize.width*0.7, cellSize.height*0, cellSize.width*0.3, cellSize.height))];
     scoreLabel.text = [NSString stringWithFormat:@"%lli", score.value];
     scoreLabel.textAlignment = NSTextAlignmentCenter;
     scoreLabel.font = [UIFont fontWithName:[Storage getFontNameFromNumber:[Storage getCurrentFont]] size:[Functions fontSize:40]];
