@@ -23,6 +23,4 @@
 -(void)switchAllBorderWidthTo:(int)borderWidth;
 -(void)switchAllBorderColorTo:(UIColor*)borderColor;
 -(void)switchFrom:(AppState)currentState to:(AppState)newState;
--(void)initAds;
--(void)removeAds;
 @end

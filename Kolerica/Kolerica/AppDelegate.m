@@ -7,9 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "Flurry.h"
 #import "Storage.h"
-@import GoogleMobileAds;
 
 @interface AppDelegate ()
 
@@ -20,19 +18,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    FlurrySessionBuilder* builder = [[[[[FlurrySessionBuilder new]
-                                        withLogLevel:FlurryLogLevelNone]
-                                       withCrashReporting:YES]
-                                      withSessionContinueSeconds:10]
-                                     withAppVersion:@"1.0"];
-    
-    [Flurry startSession:@"2ZFPWZ4JPH3JPDMPG7V9" withSessionBuilder:builder];
-    
     if([Storage getDidCompleteTutorial] == false){
         [Storage setBorderWidth:1];
     }
     
-    [GADMobileAds configureWithApplicationID:@"ca-app-pub-2889096611002538~2440342345"];
     return YES;
 }
 

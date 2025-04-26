@@ -14,7 +14,6 @@
 static NSString* const fontId = @"font";
 static NSString* const borderId = @"border";
 static NSString* const tutorialId = @"tutorial";
-static NSString* const adsId = @"ads";
 static NSString* const currentGames = @"currentGames";
 static NSString* const showScoreInMainCircle = @"scoreInMainCircle";
 static NSString* const darkMode = @"darkMode";
@@ -97,19 +96,6 @@ static NSString* const darkMode = @"darkMode";
     [defaults setBool:darkModeEnabled forKey:darkMode];
 }
 
-+(bool)setAdsState:(int)state{
-    NSNumber* s = [NSNumber numberWithInt:state];
-    [Lockbox archiveObject:s forKey:adsId];
-    return true;
-}
-
-+(int)getAdsState {
-    NSNumber* currentAdState = [Lockbox unarchiveObjectForKey:adsId];
-    if(currentAdState == nil){
-        return 0;
-    }
-    return currentAdState.intValue;
-}
 
 +(bool)addToGamesPlayed{
     NSNumber* s = [NSNumber numberWithInt:([self getCurrentGamesPlayed]+1)];

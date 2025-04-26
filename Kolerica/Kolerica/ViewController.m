@@ -7,12 +7,9 @@
 //
 
 #import "ViewController.h"
-#import "Flurry.h"
 #import "Label.h"
 
-@import GoogleMobileAds;
-
-@interface ViewController () <GADBannerViewDelegate, GADInterstitialDelegate> {
+@interface ViewController () {
     NSMutableArray *words;
     Label* mainWordLabel;
     NSString* currentWord;
@@ -25,9 +22,6 @@
     
     bool loadingGCLeaderboard;
 }
-
-@property(nonatomic, strong) GADBannerView *bannerView;
-@property(nonatomic, strong) GADInterstitial *interstitial;
 
 @end
 
@@ -44,30 +38,9 @@
     
     menuView = [self createMenuView];
     [self.view addSubview:menuView];
-    
-    if([Storage getAdsState] != 1){
-        [self initAds];
-    }
+
 }
 
--(void)initAds{
-    self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait];
-    self.bannerView.adUnitID = @"ca-app-pub-2889096611002538/1092968634";
-    CGRect screenBounds = [self propToRect:CGRectMake(0, 0, 1, 1)];
-    [self.bannerView setFrame:CGRectIntegral(CGRectMake(0, 0, screenBounds.size.width, self.bannerView.bounds.size.height))];
-    self.bannerView.center = CGPointMake(screenBounds.size.width / 2, screenBounds.size.height - (self.bannerView.bounds.size.height / 2));
-    self.bannerView.rootViewController = self;
-    self.bannerView.delegate = self;
-    self.bannerView.layer.zPosition = 200;
-    self.bannerView.tag = 1;
-    GADRequest *request = [GADRequest request];
-    request.testDevices = @[ kGADSimulatorID,                       // All simulators
-                             @"2e8fb434d98fb223f735071df2de6280"];
-    [self.bannerView loadRequest:request];
-    [self setSub:self.bannerView tagsTo:1];
-    
-    self.interstitial = [self createAndLoadInterstitial];
-}
 
 -(MenuView*)createMenuView{
     MenuView* menu = [[MenuView alloc] initWithFrame:[self propToRect:CGRectMake(0, 0, 1, 1)]];
@@ -132,8 +105,6 @@
             if (error != nil) {
                 NSLog(@"%@", [error localizedDescription]);
             }
-            
-            [Flurry logEvent:@"GameCenterReportScore" withParameters:@{@"score":[NSNumber numberWithInt:s]}];
         }];
     }
 }
@@ -199,12 +170,8 @@
 
 -(void)changeViews:(UIView*)mainView borderTo:(int)border{
     for(UIView* subview in mainView.subviews){
-        if(subview.tag == 1 || subview.tag == 2 || [subview isKindOfClass:[GADBannerView class]]){
-            subview.layer.borderWidth = 0;
-        }else{
-            subview.layer.borderWidth = border;
-        }
-        
+        subview.layer.borderWidth = border;
+
         [self changeViews:subview borderTo:border];
     }
 }
@@ -216,7 +183,7 @@
 
 -(void)changeViews:(UIView*)mainView borderColorTo:(UIColor*)borderColor{
     for(UIView* subview in mainView.subviews){
-        if(subview.tag == 1 || [subview isKindOfClass:[GADBannerView class]]){
+        if(subview.tag == 1){
 //            subview.layer.borderWidth = 0;
         }else{
             subview.layer.borderColor = borderColor.CGColor;
@@ -298,18 +265,10 @@
         case Game:
             gameView = [self createGameView];
             [self.view addSubview:gameView];
-            [Flurry logEvent:@"game" timed:true];
             break;
         case GameOver:
             gameOverView = [self createGameOverViewScore:score newHighScore:newHighScore];
             [self.view addSubview:gameOverView];
-            [Flurry endTimedEvent:@"game" withParameters:@{@"score":[NSNumber numberWithInt:score], @"newHighScore":[NSNumber numberWithBool:newHighScore]}];
-            
-            if([Storage getAdsState] != 1){
-                if (self.interstitial.isReady) {
-                    [self.interstitial presentFromRootViewController:self];
-                }
-            }
             break;
         case Settings:
             settingsView = [self createSettingsView];
@@ -321,70 +280,8 @@
     }
 }
 
-- (GADInterstitial *)createAndLoadInterstitial {
-    GADInterstitial *interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-2889096611002538/1702987505"];
-    interstitial.delegate = self;
-    GADRequest *interstitialRequest = [GADRequest request];
-    interstitialRequest.testDevices = @[ kGADSimulatorID,                       // All simulators
-                                         @"2e8fb434d98fb223f735071df2de6280"];
-    [interstitial loadRequest:interstitialRequest];
-    return interstitial;
-}
-
-- (void)adViewDidReceiveAd:(GADBannerView *)adView {
-    if([Storage getAdsState] != 1){
-        [Flurry logEvent:@"AdViewDidReceiveAd"];
-        NSLog(@"Ad %f", adView.bounds.size.height);
-        
-        [self.view addSubview:adView];
-        
-        [self setSub:adView tagsTo:1];
-        [self setSub:self.bannerView tagsTo:1];
-        isAdDisplayed = true;
-        
-        [gameCenterLeaderboardView onAdAppear];
-    }
-}
-
--(void)adView:(GADBannerView *)adView didFailToReceiveAdWithError:(GADRequestError *)error{
-    isAdDisplayed = false;
-    [self setSub:adView tagsTo:1];
-    [self.bannerView removeFromSuperview];
-    [gameCenterLeaderboardView onAdDissapear];
-    NSLog(@"Should remove ad");
-}
-
--(void)interstitialDidDismissScreen:(GADInterstitial *)ad {
-    if([Storage getAdsState] != 1){
-        self.interstitial = [self createAndLoadInterstitial];
-    }
-}
-
--(void)interstitialDidReceiveAd:(GADInterstitial *)ad {
-    if([Storage getAdsState] != 1){
-        [Flurry logEvent:@"Interstitial Receive Ad"];
-    }
-}
-
--(void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
-    [Flurry logEvent:@"Interstitial Fail Ad" withParameters:@{@"error":[error localizedDescription]}];
-}
-
--(bool)adDisplayed {
-    return isAdDisplayed;
-}
-
 -(CGFloat)bannerHeight {
-    if(isAdDisplayed == true){
-        return self.bannerView.bounds.size.height;
-    }else{
-        return 0;
-    }
-}
-
--(void)removeAds{
-    [self.bannerView removeFromSuperview];
-    isAdDisplayed = false;
+    return 0;
 }
 
 -(void)childPresentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion{

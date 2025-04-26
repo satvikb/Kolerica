@@ -10,10 +10,8 @@
 		400F3E201F6A12F100E996C6 /* Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 400F3E1F1F6A12F100E996C6 /* Label.m */; };
 		40588EC71F6969CF000F42F3 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40588EC61F6969CF000F42F3 /* GameKit.framework */; };
 		405AE1291F69DB4E000B169B /* ColorCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 405AE1281F69DB4E000B169B /* ColorCircle.m */; };
-		406F072F1F67453C00048F86 /* libFlurry_8.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 406F072E1F67453100048F86 /* libFlurry_8.1.0.a */; };
 		406F07311F67464900048F86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 406F07301F67464900048F86 /* SystemConfiguration.framework */; };
 		406F07331F67464D00048F86 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 406F07321F67464D00048F86 /* Security.framework */; };
-		406F07351F67535400048F86 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 406F07341F67535100048F86 /* GoogleMobileAds.framework */; };
 		409A2D411F665AEA00558127 /* Functions.m in Sources */ = {isa = PBXBuildFile; fileRef = 409A2D401F665AEA00558127 /* Functions.m */; };
 		409A2D441F665E5A00558127 /* Pixel_3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 409A2D431F665E5600558127 /* Pixel_3.ttf */; };
 		409A2D471F66EAEB00558127 /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 409A2D461F66EAEB00558127 /* GameView.m */; };
@@ -38,12 +36,8 @@
 		40588EC61F6969CF000F42F3 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		405AE1271F69DB4E000B169B /* ColorCircle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorCircle.h; sourceTree = "<group>"; };
 		405AE1281F69DB4E000B169B /* ColorCircle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorCircle.m; sourceTree = "<group>"; };
-		406F072C1F67453100048F86 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		406F072D1F67453100048F86 /* FlurrySessionBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurrySessionBuilder.h; sourceTree = "<group>"; };
-		406F072E1F67453100048F86 /* libFlurry_8.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_8.1.0.a; sourceTree = "<group>"; };
 		406F07301F67464900048F86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		406F07321F67464D00048F86 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		406F07341F67535100048F86 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		409A2D3F1F665AEA00558127 /* Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Functions.h; sourceTree = "<group>"; };
 		409A2D401F665AEA00558127 /* Functions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Functions.m; sourceTree = "<group>"; };
 		409A2D431F665E5600558127 /* Pixel_3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pixel_3.ttf; sourceTree = "<group>"; };
@@ -80,10 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				406F07351F67535400048F86 /* GoogleMobileAds.framework in Frameworks */,
 				406F07331F67464D00048F86 /* Security.framework in Frameworks */,
 				406F07311F67464900048F86 /* SystemConfiguration.framework in Frameworks */,
-				406F072F1F67453C00048F86 /* libFlurry_8.1.0.a in Frameworks */,
 				40588EC71F6969CF000F42F3 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,21 +83,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		406F072B1F67453100048F86 /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				406F072C1F67453100048F86 /* Flurry.h */,
-				406F072D1F67453100048F86 /* FlurrySessionBuilder.h */,
-				406F072E1F67453100048F86 /* libFlurry_8.1.0.a */,
-			);
-			path = Flurry;
-			sourceTree = "<group>";
-		};
 		409A2D5A1F671DB800558127 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				40588EC61F6969CF000F42F3 /* GameKit.framework */,
-				406F07341F67535100048F86 /* GoogleMobileAds.framework */,
 				406F07321F67464D00048F86 /* Security.framework */,
 				406F07301F67464900048F86 /* SystemConfiguration.framework */,
 			);
@@ -160,7 +141,6 @@
 				409A2D581F6712EB00558127 /* Lockbox.m */,
 				409A2D5D1F671F0400558127 /* GameCenterLeaderboardView.h */,
 				409A2D5E1F671F0400558127 /* GameCenterLeaderboardView.m */,
-				406F072B1F67453100048F86 /* Flurry */,
 				405AE1271F69DB4E000B169B /* ColorCircle.h */,
 				405AE1281F69DB4E000B169B /* ColorCircle.m */,
 				400F3E1E1F6A12F100E996C6 /* Label.h */,
@@ -398,12 +378,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Kolerica/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Kolerica/Flurry",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vborra.Kolerica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -420,12 +397,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Kolerica/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Kolerica/Flurry",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vborra.Kolerica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

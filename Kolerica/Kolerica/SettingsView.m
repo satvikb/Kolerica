@@ -214,26 +214,6 @@
     creditsLabel.layer.borderColor = UIColor.blueColor.CGColor;
     [creditsView addSubview:creditsLabel];
     
-    Button* removeAds = [[Button alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.15, 0.5, 0.7, 0.1)]) withBlock:^void{} text:@""];
-    
-    removeAds.textLabel.text = [Storage getAdsState] == 0 ? @"remove ads :(" : @"enable ads :)";
-    __unsafe_unretained typeof(Button*) wb = removeAds;
-
-    [removeAds setBlock:^{
-        if([Storage getAdsState] == 0){
-            [Storage setAdsState:1];
-            wb.textLabel.text = @"enable ads :)";
-            [self.delegate removeAds];
-        }else{
-            [Storage setAdsState:0];
-            wb.textLabel.text = @"remove ads :(";
-            [self.delegate initAds];
-        }
-    }];
-    
-    [creditsView addSubview:removeAds];
-    removeAds.layer.borderWidth = [Storage getCurrentBorderWidth];
-    
     Button* resetTutorialBtn = [[Button alloc] initWithFrame:CGRectIntegral([self propToRect:CGRectMake(0.2, 0.625, 0.6, 0.05)]) withBlock:^void{
         [Storage setDidNotCompleteTutorial];
     } text:@"reset tutorial"];
