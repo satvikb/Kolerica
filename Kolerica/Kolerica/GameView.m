@@ -224,7 +224,7 @@
             timerBar.backgroundColor = UIColor.redColor;
             
             [UIView animateWithDuration:0.5 animations:^void{
-                timerBar.layer.opacity = 0;
+                self->timerBar.layer.opacity = 0;
             }];
             
             [self performSelector:@selector(gameOverAndResetBorder:) withObject:btn afterDelay:0.5];
@@ -294,7 +294,7 @@
     CGRect f = timerBar.frame;
     f.size = CGSizeMake(0, f.size.height);
     [UIView animateWithDuration:timePerColor delay:0 options:UIViewAnimationOptionCurveLinear animations:^void{
-        timerBar.frame = f;
+        self->timerBar.frame = f;
 
     } completion:nil];
 }

@@ -88,9 +88,9 @@
         }
         else{
             if ([GKLocalPlayer localPlayer].authenticated) {
-                gameCenterEnabled = YES;
+                self->gameCenterEnabled = YES;
             }else{
-                gameCenterEnabled = NO;
+                self->gameCenterEnabled = NO;
             }
         }
     };
@@ -123,9 +123,9 @@
                 NSLog(@"Error retreiving scores %@", error);
                 [self showLabelUnderScores:@"failed to get scores" time:3];
             }else{
-                gameCenterLeaderboardView = [self createGameCenterLeaderboardViewWithScores:scores localScore:leaderboard.localPlayerScore];
-                [self.view addSubview:gameCenterLeaderboardView];
-                loadingGCLeaderboard = false;
+                self->gameCenterLeaderboardView = [self createGameCenterLeaderboardViewWithScores:scores localScore:leaderboard.localPlayerScore];
+                [self.view addSubview:self->gameCenterLeaderboardView];
+                self->loadingGCLeaderboard = false;
             }
         }];
     }else if(gameCenterEnabled == false){

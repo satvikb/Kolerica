@@ -65,7 +65,7 @@
     
     scoreOnCircleButton = [[Button alloc] initWithFrame:[self propToRect:CGRectMake(0.05, 0.6, 0.9, 0.075)] withBlock:^{
         [Storage setShouldShowScoreInMainCircle:![Storage getShowScoreInMainCircle]];
-        scoreOnCircleButton.textLabel.text = [NSString stringWithFormat:@"score on main circle %@", [Storage getShowScoreInMainCircle] == true ? @"yes" : @"no"];
+        self->scoreOnCircleButton.textLabel.text = [NSString stringWithFormat:@"score on main circle %@", [Storage getShowScoreInMainCircle] == true ? @"yes" : @"no"];
     } text:@""];
     scoreOnCircleButton.textLabel.text = [NSString stringWithFormat:@"score on main circle %@", [Storage getShowScoreInMainCircle] == true ? @"yes" : @"no"];
     scoreOnCircleButton.layer.borderWidth = [Storage getCurrentBorderWidth];
