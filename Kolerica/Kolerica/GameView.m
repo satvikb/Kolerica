@@ -162,10 +162,10 @@
         for(int x = 0; x < 3; x++){
             i++;
             
-            CGFloat width = [self propToRect:CGRectMake(0, 0, 0, 0.15)].size.height;
+            CGFloat width = [self propToRect:CGRectMake(0, 0, 0, 0.10)].size.height;
             
 //          CGFloat propWidth = width/[self propToRect:CGRectMake(0, 0, 1, 0)].size.width;
-            CGFloat paddingWidth = 0.05;
+            CGFloat paddingWidth = 0.03;
             
             //dont touch plz
             CGPoint origin = [self propToRect:CGRectMake(((x+1)*(0.25)+(paddingWidth*(x-1))), 0.375+(y*0.175), 0, 0)].origin;

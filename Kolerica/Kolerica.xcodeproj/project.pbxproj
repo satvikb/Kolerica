@@ -178,7 +178,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = "satvik borra";
 				TargetAttributes = {
 					40FE749F1F664CDB00D1D9DA = {
